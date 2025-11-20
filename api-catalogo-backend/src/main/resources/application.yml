@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: catologo-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/backend_catalogo_bd
+    username: postgres
+    password: senhapostgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true
