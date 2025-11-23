@@ -31,12 +31,12 @@ public class ProductService {
         if (productRequestDTO.categoryIds() != null && !productRequestDTO.categoryIds().isEmpty()){
             List<Category> categorys = categoryRepository.findAllById(productRequestDTO.categoryIds());
 
-            if (productRequestDTO.categoryIds().size() != productEntity.getCategories().size() ){
+            if (productRequestDTO.categoryIds().size() != categorys.size()){
                 throw new CategoriaNaoEncontradaException("Categoria nã encontrada");
             }
             productEntity.setCategories(new HashSet<>(categorys));
         }
-        productRepository.save(productEntity);
+        productEntity = productRepository.save(productEntity);
         return productMapper.toDTO(productEntity);
     }
 }
