@@ -1,4 +1,4 @@
-package com.github.oliveira.gb.apicatalogobackend.execption;
+package com.github.oliveira.gb.apicatalogobackend.exception;
 
 public class CategoriaNaoEncontradaException extends RuntimeException{
     public CategoriaNaoEncontradaException(String msg){

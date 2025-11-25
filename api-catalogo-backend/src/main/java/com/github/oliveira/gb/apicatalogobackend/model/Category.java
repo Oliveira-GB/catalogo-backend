@@ -22,7 +22,7 @@ public class Category {
     @EqualsAndHashCode.Include
     private UUID id;
 
-    @Column(name = "name", nullable = false, length = 150)
+    @Column(name = "name",unique = true , nullable = false, length = 150)
     private String name;
 
     @ManyToMany(mappedBy = "categories")
