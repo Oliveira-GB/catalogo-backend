@@ -4,6 +4,7 @@ import com.github.oliveira.gb.apicatalogobackend.dto.CategoryRequestDTO;
 import com.github.oliveira.gb.apicatalogobackend.dto.CategoryResponseDTO;
 import com.github.oliveira.gb.apicatalogobackend.mappers.CategoryMapper;
 import com.github.oliveira.gb.apicatalogobackend.repository.CategoryRepository;
+import com.github.oliveira.gb.apicatalogobackend.validator.CategoryValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,11 +15,16 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final CategoryValidator categoryValidator;
 
     @Transactional
     public CategoryResponseDTO salvar(CategoryRequestDTO dto){
+        categoryValidator.validar(dto);
+
         var categoryEntity = categoryMapper.toEntity(dto);
+
         categoryEntity = categoryRepository.save(categoryEntity);
+
         return categoryMapper.toDTO(categoryEntity);
     }
 }

@@ -11,7 +11,7 @@ public interface ProductMapper {
 
     @Mapping(target = "categories", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "crearedAt", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Product toEntity(ProductRequestDTO dto);
 

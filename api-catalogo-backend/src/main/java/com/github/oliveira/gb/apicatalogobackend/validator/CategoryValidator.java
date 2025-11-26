@@ -43,6 +43,6 @@ public class CategoryValidator {
             return true;
         }
 
-        return category.getId().equals(idParaIgnorar);
+        return !category.getId().equals(idParaIgnorar);
     }
-}c
+}
