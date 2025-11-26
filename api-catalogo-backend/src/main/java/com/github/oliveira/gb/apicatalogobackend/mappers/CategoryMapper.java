@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface CategoryMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "products", ignore = true)
+    @Mapping(target = "product", ignore = true)
     Category toEntity(CategoryRequestDTO dto);
 
     CategoryResponseDTO toDTO(Category entity);
