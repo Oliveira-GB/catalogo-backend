@@ -3,6 +3,7 @@ package com.github.oliveira.gb.apicatalogobackend.service;
 import com.github.oliveira.gb.apicatalogobackend.dto.ProductRequestDTO;
 import com.github.oliveira.gb.apicatalogobackend.dto.ProductResponseDTO;
 import com.github.oliveira.gb.apicatalogobackend.exception.CategoriaNaoEncontradaException;
+import com.github.oliveira.gb.apicatalogobackend.exception.RecursoNaoEncontradoException;
 import com.github.oliveira.gb.apicatalogobackend.mappers.ProductMapper;
 import com.github.oliveira.gb.apicatalogobackend.model.Category;
 import com.github.oliveira.gb.apicatalogobackend.model.Product;
@@ -12,13 +13,13 @@ import com.github.oliveira.gb.apicatalogobackend.validator.ProductValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +47,19 @@ public class ProductService {
         productEntity = productRepository.save(productEntity);
         return productMapper.toDTO(productEntity);
     }
+
+    @Transactional(readOnly = true)
+    public ProductResponseDTO obterPorId(UUID id){
+        Optional<Product> productOpt = productRepository.findById(id);
+
+        if (productOpt.isEmpty()){
+            throw new RecursoNaoEncontradoException("Não foi encontrado o Produto");
+        }
+
+        var productEncontrado = productOpt.get();
+        return productMapper.toDTO(productEncontrado);
+    }
+
 
     @Transactional(readOnly = true)
     public Page<ProductResponseDTO> listarTodosProdutos(

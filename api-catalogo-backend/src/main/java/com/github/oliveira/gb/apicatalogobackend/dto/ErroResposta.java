@@ -20,4 +20,8 @@ public record ErroResposta (int status, String mensagem, List<ErroCampo> erroCam
     public static ErroResposta regraNegocio(String mensagem){
         return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), mensagem, List.of());
     }
+
+    public static ErroResposta naoEncontrado(String mensagem){
+        return new ErroResposta(HttpStatus.NOT_FOUND.value(), mensagem, List.of());
+    }
 }
