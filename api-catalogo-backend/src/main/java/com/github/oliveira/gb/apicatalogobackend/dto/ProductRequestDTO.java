@@ -26,4 +26,10 @@ public record ProductRequestDTO(
         @NotNull(message = "A lista de Id's da categoria não pode ser nula")
         @NotEmpty(message = "A lista não pode estar vazia")
         Set<UUID> categoryIds
-) {}
+) {
+    public ProductRequestDTO{
+        if (name != null){
+            name = name.trim();
+        }
+    }
+}

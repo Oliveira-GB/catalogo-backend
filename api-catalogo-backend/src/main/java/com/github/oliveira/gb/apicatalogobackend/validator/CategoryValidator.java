@@ -31,7 +31,7 @@ public class CategoryValidator {
     }
 
     public boolean checkNomeDuplicado(String name, UUID idParaIgnorar){
-        Optional<Category> categoryEncontrada = categoryRepository.findByName(name);
+        Optional<Category> categoryEncontrada = categoryRepository.findByNameIgnoreCase(name);
 
         if (categoryEncontrada.isEmpty()){
             return false;
