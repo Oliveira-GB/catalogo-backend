@@ -5,10 +5,15 @@ import com.github.oliveira.gb.apicatalogobackend.dto.ProductResponseDTO;
 import com.github.oliveira.gb.apicatalogobackend.exception.CategoriaNaoEncontradaException;
 import com.github.oliveira.gb.apicatalogobackend.mappers.ProductMapper;
 import com.github.oliveira.gb.apicatalogobackend.model.Category;
+import com.github.oliveira.gb.apicatalogobackend.model.Product;
 import com.github.oliveira.gb.apicatalogobackend.repository.CategoryRepository;
 import com.github.oliveira.gb.apicatalogobackend.repository.ProductRepository;
 import com.github.oliveira.gb.apicatalogobackend.validator.ProductValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +32,7 @@ public class ProductService {
     @Transactional
     public ProductResponseDTO salvar(ProductRequestDTO productRequestDTO){
         this.productValidator.validar(productRequestDTO);
+
         var productEntity = productMapper.toEntity(productRequestDTO);
 
         if (productRequestDTO.categoryIds() != null && !productRequestDTO.categoryIds().isEmpty()){
@@ -39,5 +45,12 @@ public class ProductService {
         }
         productEntity = productRepository.save(productEntity);
         return productMapper.toDTO(productEntity);
+    }
+
+    public Page<ProductResponseDTO> listarTodosProdutos(
+            Pageable pageable){
+        Page<Product> resultado = productRepository.findAll(pageable);
+        Page<ProductResponseDTO> resultados = resultado.map(product -> productMapper.toDTO(product));
+        return resultados;
     }
 }
