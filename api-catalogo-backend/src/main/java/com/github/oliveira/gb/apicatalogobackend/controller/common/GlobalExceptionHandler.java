@@ -3,6 +3,7 @@ package com.github.oliveira.gb.apicatalogobackend.controller.common;
 import com.github.oliveira.gb.apicatalogobackend.dto.ErroCampo;
 import com.github.oliveira.gb.apicatalogobackend.dto.ErroResposta;
 import com.github.oliveira.gb.apicatalogobackend.exception.CategoriaNaoEncontradaException;
+import com.github.oliveira.gb.apicatalogobackend.exception.RecursoNaoEncontradoException;
 import com.github.oliveira.gb.apicatalogobackend.exception.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -38,6 +39,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErroResposta handleCategoriaNaoEncontradaException(CategoriaNaoEncontradaException e){
         return ErroResposta.regraNegocio(e.getMessage());
+    }
+
+    @ExceptionHandler(RecursoNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErroResposta HandleProductNaoEncontradoException(RecursoNaoEncontradoException e){
+        return ErroResposta.naoEncontrado(e.getMessage());
     }
 
     @ExceptionHandler(RuntimeException.class)

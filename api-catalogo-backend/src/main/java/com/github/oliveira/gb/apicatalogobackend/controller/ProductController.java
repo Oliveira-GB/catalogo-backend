@@ -5,6 +5,7 @@ import com.github.oliveira.gb.apicatalogobackend.dto.ProductResponseDTO;
 import com.github.oliveira.gb.apicatalogobackend.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("products")
@@ -37,5 +39,10 @@ public class ProductController implements GenericHeaderLocation {
             Pageable pageable){
         var listagem = productService.listarTodosProdutos(pageable);
         return ResponseEntity.ok(listagem);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ProductResponseDTO> exibirPorId(@PathVariable("id") UUID id){
+        return ResponseEntity.ok(productService.obterPorId(id));
     }
 }
