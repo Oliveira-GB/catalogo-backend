@@ -6,4 +6,10 @@ public record CategoryRequestDTO(
 
         @NotBlank(message = "O nome da categoria é obrigatório")
         String name
-) {}
+) {
+    public CategoryRequestDTO{
+        if (name != null){
+            name = name.trim();
+        }
+    }
+}

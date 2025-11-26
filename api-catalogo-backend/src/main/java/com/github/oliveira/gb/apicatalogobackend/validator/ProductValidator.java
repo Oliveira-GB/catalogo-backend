@@ -29,7 +29,7 @@ public class ProductValidator {
     }
 
     private boolean checkNomeDuplicado(String name, UUID idParaIgnorar){
-        Optional<Product> productEncontrado = productRepository.findByName(name);
+        Optional<Product> productEncontrado = productRepository.findByNameIgnoreCase(name);
 
         if (productEncontrado.isEmpty()){
             return false;
