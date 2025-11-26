@@ -47,6 +47,7 @@ public class ProductService {
         return productMapper.toDTO(productEntity);
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductResponseDTO> listarTodosProdutos(
             Pageable pageable){
         Page<Product> resultado = productRepository.findAll(pageable);
