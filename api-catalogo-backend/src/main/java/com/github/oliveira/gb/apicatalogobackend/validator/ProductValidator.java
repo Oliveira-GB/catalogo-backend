@@ -1,6 +1,7 @@
 package com.github.oliveira.gb.apicatalogobackend.validator;
 
 import com.github.oliveira.gb.apicatalogobackend.dto.ProductRequestDTO;
+import com.github.oliveira.gb.apicatalogobackend.dto.ProductUpdateDTO;
 import com.github.oliveira.gb.apicatalogobackend.exception.RegistroDuplicadoException;
 import com.github.oliveira.gb.apicatalogobackend.model.Product;
 import com.github.oliveira.gb.apicatalogobackend.repository.ProductRepository;
@@ -25,6 +26,14 @@ public class ProductValidator {
     public void validar(ProductRequestDTO dto, UUID idProdutoAtualizado){
         if (checkNomeDuplicado(dto.name(), idProdutoAtualizado)){
             throw new RegistroDuplicadoException("Já existe um produto com este nome!!");
+        }
+    }
+
+    public void validar(ProductUpdateDTO dto, UUID idParaAtualizar){
+        if (dto.name() != null) {
+            if (checkNomeDuplicado(dto.name(), idParaAtualizar)) {
+                throw new RegistroDuplicadoException("Já existe um produto com este nome!!");
+            }
         }
     }
 

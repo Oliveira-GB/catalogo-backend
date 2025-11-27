@@ -2,9 +2,9 @@ package com.github.oliveira.gb.apicatalogobackend.mappers;
 
 import com.github.oliveira.gb.apicatalogobackend.dto.ProductRequestDTO;
 import com.github.oliveira.gb.apicatalogobackend.dto.ProductResponseDTO;
+import com.github.oliveira.gb.apicatalogobackend.dto.ProductUpdateDTO;
 import com.github.oliveira.gb.apicatalogobackend.model.Product;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", uses = {CategoryMapper.class})
 public interface ProductMapper {
@@ -16,4 +16,11 @@ public interface ProductMapper {
     Product toEntity(ProductRequestDTO dto);
 
     ProductResponseDTO toDTO(Product entity);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updateAt", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    void updateEntityFromDto(ProductUpdateDTO dto, @MappingTarget Product entity);
 }

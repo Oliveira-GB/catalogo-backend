@@ -2,6 +2,7 @@ package com.github.oliveira.gb.apicatalogobackend.controller;
 
 import com.github.oliveira.gb.apicatalogobackend.dto.ProductRequestDTO;
 import com.github.oliveira.gb.apicatalogobackend.dto.ProductResponseDTO;
+import com.github.oliveira.gb.apicatalogobackend.dto.ProductUpdateDTO;
 import com.github.oliveira.gb.apicatalogobackend.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +57,11 @@ public class ProductController implements GenericHeaderLocation {
             ){
         Page<ProductResponseDTO> resultadoPagina = productService.pesquisar(name, price, pageable);
         return ResponseEntity.ok(resultadoPagina);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductResponseDTO> atualizar(@PathVariable("id") UUID id, @RequestBody @Valid ProductUpdateDTO dto){
+        var productAtulizado = productService.atualizar(id, dto);
+        return ResponseEntity.ok(productAtulizado);
     }
 }
