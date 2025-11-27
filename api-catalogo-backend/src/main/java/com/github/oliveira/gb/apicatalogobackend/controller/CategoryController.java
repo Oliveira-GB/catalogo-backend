@@ -45,4 +45,10 @@ public class CategoryController implements GenericHeaderLocation {
     public ResponseEntity<CategoryResponseDTO> exibirPorId(UUID id){
         return ResponseEntity.ok(categoryService.obterPorId(id));
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleterPorId(@PathVariable("id") UUID id){
+        categoryService.deleterPorId(id);
+        return ResponseEntity.noContent().build();
+    }
 }
