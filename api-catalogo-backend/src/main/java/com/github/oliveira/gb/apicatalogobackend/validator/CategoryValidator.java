@@ -2,6 +2,7 @@ package com.github.oliveira.gb.apicatalogobackend.validator;
 
 import com.github.oliveira.gb.apicatalogobackend.dto.CategoryRequestDTO;
 import com.github.oliveira.gb.apicatalogobackend.dto.CategoryResponseDTO;
+import com.github.oliveira.gb.apicatalogobackend.dto.CategoryUpdateDTO;
 import com.github.oliveira.gb.apicatalogobackend.exception.RegistroDuplicadoException;
 import com.github.oliveira.gb.apicatalogobackend.model.Category;
 import com.github.oliveira.gb.apicatalogobackend.model.Product;
@@ -27,6 +28,14 @@ public class CategoryValidator {
     public void validar(CategoryRequestDTO dto, UUID id){
         if (checkNomeDuplicado(dto.name(), id)){
             throw new RegistroDuplicadoException("Nome de Categoria já usado!!");
+        }
+    }
+
+    public void validar(CategoryUpdateDTO dto, UUID id){
+        if (dto.name() != null){
+            if (checkNomeDuplicado(dto.name(), id)){
+                throw new RegistroDuplicadoException("Nome já está sendo usado!!");
+            }
         }
     }
 
