@@ -2,6 +2,7 @@ package com.github.oliveira.gb.apicatalogobackend.service;
 
 import com.github.oliveira.gb.apicatalogobackend.dto.CategoryRequestDTO;
 import com.github.oliveira.gb.apicatalogobackend.dto.CategoryResponseDTO;
+import com.github.oliveira.gb.apicatalogobackend.dto.CategoryUpdateDTO;
 import com.github.oliveira.gb.apicatalogobackend.exception.CategoriaComProductException;
 import com.github.oliveira.gb.apicatalogobackend.exception.RecursoNaoEncontradoException;
 import com.github.oliveira.gb.apicatalogobackend.mappers.CategoryMapper;
@@ -65,5 +66,16 @@ public class CategoryService {
         }
 
         categoryRepository.delete(categoryEncontrada);
+    }
+
+    @Transactional
+    public CategoryResponseDTO atualizar(UUID id, CategoryUpdateDTO dto){
+        Category categoryEntity = categoryRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Categoria não encontrada"));
+        categoryValidator.validar(dto, id);
+
+        categoryMapper.updateEntityFromDto(dto, categoryEntity);
+        categoryRepository.save(categoryEntity);
+        return categoryMapper.toDTO(categoryEntity);
     }
 }

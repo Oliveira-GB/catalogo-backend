@@ -2,6 +2,7 @@ package com.github.oliveira.gb.apicatalogobackend.controller;
 
 import com.github.oliveira.gb.apicatalogobackend.dto.CategoryRequestDTO;
 import com.github.oliveira.gb.apicatalogobackend.dto.CategoryResponseDTO;
+import com.github.oliveira.gb.apicatalogobackend.dto.CategoryUpdateDTO;
 import com.github.oliveira.gb.apicatalogobackend.model.Category;
 import com.github.oliveira.gb.apicatalogobackend.service.CategoryService;
 import jakarta.validation.Valid;
@@ -50,5 +51,11 @@ public class CategoryController implements GenericHeaderLocation {
     public ResponseEntity<Void> deleterPorId(@PathVariable("id") UUID id){
         categoryService.deleterPorId(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CategoryResponseDTO> atualizar(@PathVariable("id") UUID id, @RequestBody @Valid CategoryUpdateDTO dto){
+        var categoryEntity = categoryService.atualizar(id, dto);
+        return ResponseEntity.ok(categoryEntity);
     }
 }

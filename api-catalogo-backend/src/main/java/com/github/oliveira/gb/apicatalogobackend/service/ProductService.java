@@ -2,6 +2,7 @@
 
     import com.github.oliveira.gb.apicatalogobackend.dto.ProductRequestDTO;
     import com.github.oliveira.gb.apicatalogobackend.dto.ProductResponseDTO;
+    import com.github.oliveira.gb.apicatalogobackend.dto.ProductUpdateDTO;
     import com.github.oliveira.gb.apicatalogobackend.exception.CategoriaNaoEncontradaException;
     import com.github.oliveira.gb.apicatalogobackend.exception.RecursoNaoEncontradoException;
     import com.github.oliveira.gb.apicatalogobackend.mappers.ProductMapper;
@@ -86,5 +87,16 @@
 
             return productRepository.findAll(specs, pageable)
                     .map(productMapper::toDTO);
+        }
+
+        @Transactional
+        public ProductResponseDTO atualizar(UUID id, ProductUpdateDTO dto){
+            Product productEntity = productRepository.findById(id)
+                    .orElseThrow(() -> new RecursoNaoEncontradoException("Produto não encontrado"));
+            productValidator.validar(dto, id);
+
+            productMapper.updateEntityFromDto(dto, productEntity);
+            productRepository.save(productEntity);
+            return productMapper.toDTO(productEntity);
         }
     }
