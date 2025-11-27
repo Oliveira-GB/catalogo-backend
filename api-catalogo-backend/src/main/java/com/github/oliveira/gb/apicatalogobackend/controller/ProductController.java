@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.UUID;
 
@@ -31,22 +32,29 @@ public class ProductController implements GenericHeaderLocation {
         return ResponseEntity.created(location).body(productSalvo);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<ProductResponseDTO>> listarTodosProdutos(
-            @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC)
-            Pageable pageable){
-        var listagem = productService.listarTodosProdutos(pageable);
-        return ResponseEntity.ok(listagem);
-    }
-
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> exibirPorId(@PathVariable("id") UUID id){
         return ResponseEntity.ok(productService.obterPorId(id));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarPorId(@PathVariable("id") UUID id){
         productService.deletarPorId(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ProductResponseDTO>> pesquisar(
+            @RequestParam(value = "name", required = false)
+            String name,
+
+            @RequestParam(value = "price", required = false)
+            BigDecimal price,
+
+            @PageableDefault(size = 10, sort = "name", direction = Sort.Direction.ASC)
+            Pageable pageable
+            ){
+        Page<ProductResponseDTO> resultadoPagina = productService.pesquisar(name, price, pageable);
+        return ResponseEntity.ok(resultadoPagina);
     }
 }
