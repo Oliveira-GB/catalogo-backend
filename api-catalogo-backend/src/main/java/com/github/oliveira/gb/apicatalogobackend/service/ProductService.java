@@ -68,4 +68,12 @@ public class ProductService {
         Page<ProductResponseDTO> resultados = resultado.map(product -> productMapper.toDTO(product));
         return resultados;
     }
+
+    @Transactional
+    public void deletarPorId(UUID id){
+        var productEncontrado = productRepository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Não possui o Produto!!!"));
+
+        productRepository.delete(productEncontrado);
+    }
 }

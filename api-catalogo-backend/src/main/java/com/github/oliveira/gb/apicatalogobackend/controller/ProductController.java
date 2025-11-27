@@ -5,13 +5,11 @@ import com.github.oliveira.gb.apicatalogobackend.dto.ProductResponseDTO;
 import com.github.oliveira.gb.apicatalogobackend.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -44,5 +42,11 @@ public class ProductController implements GenericHeaderLocation {
     @GetMapping("{id}")
     public ResponseEntity<ProductResponseDTO> exibirPorId(@PathVariable("id") UUID id){
         return ResponseEntity.ok(productService.obterPorId(id));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable("id") UUID id){
+        productService.deletarPorId(id);
+        return ResponseEntity.noContent().build();
     }
 }

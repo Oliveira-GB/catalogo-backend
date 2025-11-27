@@ -36,6 +36,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CategoriaNaoEncontradaException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErroResposta handleCategoriaNaoEncontradaExeception(CategoriaNaoEncontradaException e){
+        return ErroResposta.conflito(e.getMessage());
+    }
+
+    @ExceptionHandler(CategoriaNaoEncontradaException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErroResposta handleCategoriaNaoEncontradaException(CategoriaNaoEncontradaException e){
         return ErroResposta.regraNegocio(e.getMessage());
