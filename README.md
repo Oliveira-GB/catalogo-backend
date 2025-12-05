@@ -1,7 +1,3 @@
-Com certeza. Com base nos arquivos que você enviou (`pom.xml`, `application.yml`, `ProductController.java`, etc.), preparei um `README.md` completo e técnico para o seu projeto **product\_api**.
-
-Ele inclui a stack tecnológica, instruções de configuração do banco de dados (PostgreSQL), como rodar o projeto e a documentação dos endpoints disponíveis.
-
 Aqui está o conteúdo sugerido para o seu arquivo `README.md`:
 
 ````markdown
